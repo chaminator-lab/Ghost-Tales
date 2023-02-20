@@ -47,7 +47,7 @@ def getOrderslist():
     return orderslist
 print(getOrderslist())
 
-def runActions(OrderList = getOrderslist()):
+def runActions(PlayerID,OrderList = getOrderslist()):
     ghost_first=True
     for order in OrderList:
         if order == "ghost" and ghost_first==True:
