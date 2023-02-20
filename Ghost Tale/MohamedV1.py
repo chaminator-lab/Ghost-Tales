@@ -38,7 +38,23 @@ map = lines()[1].split()
 MapXY.append(int(map[0]))
 MapXY.append(int(map[1]))
 
+# ICI LINA ET CHARLOTTE
+#Take orders from player and stock them in alist
+def getOrderslist():
+    print("give orders YOU IDIOT")
+    orders=input()
+    orderslist = orders.split()
+    return orderslist
+print(getOrderslist())
 
+def runActions(OrderList = getOrderslist()):
+    ghost_first=True
+    for order in OrderList:
+        if order == "ghost" and ghost_first==True:
+            Invokeghost()
+        else:
+
+#Fini LINA ET CHARLOTTE
 
 #Initialise le dictionnaire et la liste des cases magique
 def getMagicDict():
