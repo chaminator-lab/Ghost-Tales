@@ -41,13 +41,28 @@ MapXY.append(int(map[1]))
 # ICI LINA ET CHARLOTTE
 #Take orders from player and stock them in alist
 def getOrderslist():
+    """
+    takes order from players and stock them in a list
+    
+    return:
+        orderslist: list in which the orders of the players have been stocked
+    """
     print("give orders YOU IDIOT")
     orders=input()
     orderslist = orders.split()
     return orderslist
 print(getOrderslist())
 
-def runActions(PlayerID,OrderList = getOrderslist()):
+def runActions(OrderList = getOrderslist()):
+    """
+    execute orders stocked in orderslist and checks whether the orders are executable or not
+    
+    parameters: 
+    OrderList: list in which the orders of the players have been stocked
+    
+    returns: 
+    none (yet)
+    """
     ghost_first=True
     for order in OrderList:
         if order == "ghost" and ghost_first==True:
@@ -134,6 +149,17 @@ def Invokeghost (Players,PlayerID):
 
 #2- HEAL ghost with chosen amount and reduce twice the amount from magic
 def Healghost(Players,PlayerID,targetGhost,amount):
+    """
+    heals ghost of a player with a chosen amount of magic which will cost the player 2 points of magic per HP given
+    
+    parameters:
+        PlayerID: ID of the player who wants to add HP to their ghost (int)
+        targetGhost: ghost which will receive HP (int?)
+        amount: amount of HP given to the ghost (int)
+        
+    return:
+        Players: the player's dictionary is updated with the magic points and HP modifications
+    """
     if targetGhost in Players[PlayerID]["ghostsLocationList"] and Players[PlayerID]["magic"] >= (amount*2):
        Players[PlayerID]["ghosts"][targetGhost] += amount
        Players[PlayerID]["magic"] -= (amount*2)
