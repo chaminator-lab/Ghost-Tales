@@ -35,7 +35,7 @@ def initialiseMapXY():
 
 #Initialise les premier phantomes de debut de partie et sauvegarde la ou les fantomes apparaissent
 #Pour chaque joueur dans une clé "ghostPopLocation"
-def setInitialGhostsAndPopSpot(Players):
+def InitGhostsAndPopSpot(Players):
   ghost1 =  getLines()[3].split()
   ghost2 =  getLines()[4].split()
   Players[1]["ghosts"][(int(ghost1[1]), (int(ghost1[2])))] =  100
