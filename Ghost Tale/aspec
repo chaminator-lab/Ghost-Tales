@@ -1,0 +1,91 @@
+
+
+
+
+
+
+def generatePhaseOne(Players):
+    """ take a decision regarding the PHASE One (ghost creation)
+    
+    Parametres : 
+    ------------
+
+    Players : dictionnaire des joueurs
+
+    
+    return
+    ------------
+    a string "ghost" or nothing
+    
+    """
+
+
+
+
+def generatePhasetwo(Players):
+    """ take a decision regarding the PHASE Two (healing)
+    
+    Parametres : 
+    ------------
+
+    Players : dictionnaire des joueurs
+
+    
+    return
+    ------------
+    a string order format for healing XY:+Z
+    
+    """
+
+
+def generatePhasethree(Players):
+    """ checks if any ghost is on a magic case and returns the order to pick it up
+  
+    Parametres : 
+    ------------
+
+    Players : dictionnaire des joueurs
+
+    
+    return
+    ------------
+    a string order format for collecting XY:$
+    
+    """
+
+def generatePhasefour(Players):
+    """ checks if any enemy ghost has less health then one of our ghosts and moves thowards the enemy
+      moves the ghost out of the pop location
+    Parametres : 
+    ------------
+
+    Players : dictionnaire des joueurs
+
+    
+    return
+    ------------
+    a string order format for movement XY:@ZC
+    
+    """
+
+def generatePhasefive(Players):
+    """ checks if any enemy ghost is adjacant and has less health and attacks it
+    Parametres : 
+    ------------
+
+    Players : dictionnaire des joueurs
+
+    
+    return
+    ------------
+    a string order format for combat XY:xZC
+    
+    """
+
+
+
+
+
+
+
+
