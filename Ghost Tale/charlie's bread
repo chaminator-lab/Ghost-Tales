@@ -4,31 +4,53 @@ import blessed
 term=blessed.Terminal()
 
 def getLines():
+"""Opens the file and returns each line in a list """
 #    //FILE PATH TO CORRECT //
   fh = open("Map.txt", "r")
   lines = fh.readlines()
   return lines
 
-#Initialise  Maplist
 def initialiseMapXY():
+"""Initialse Maplist.
+  Parameters
+ -----------
+  map: list of strings
+
+  Return
+  -----------
+  MapXY: Empty dictionary 
+  """
   MapXY=[]
   map =  getLines()[1].split()
   MapXY.append(int(map[0]))
   MapXY.append(int(map[1]))  
   return MapXY
 
-#Initialise MagicDict
 def getMagicDict(): 
+"""Initialise MagicDict
+   Parameters
+   ----------
+   MagicDict: empty dictionary
+
+   Return
+   ------
+   MagicDict
+   """
    MagicDict = {}
-   #Set MagicDict
    for i in range(6 , len(getLines())):
       splitLine =  getLines()[i].split()
       MagicDict[(int(splitLine[0]), int(splitLine[1]))]= int(splitLine[2])
    return MagicDict
 
-
 def getMagicList():
-# Initialise  Magiclist
+"""Initialise MagicLict
+  Parameters
+  MagicLict: empty list
+
+  Return
+  -------
+  MagicLict
+  """
   MagicList=[]
 #Set MagicList
   for i in range(6 , len(getLines())):
@@ -36,9 +58,18 @@ def getMagicList():
       MagicList.append((int(splitLine[0]), int(splitLine[1])))
   return MagicList
 
-#Initialise les premier phantomes de debut de partie et sauvegarde la ou les fantomes apparaissent
-#Pour chaque joueur dans une clé "ghostPopLocation"
 def setInitialGhostsAndPopSpot(Players,lines=getLines()):
+"""
+  Initializes the first ghosts at the start of the game and saves where the ghosts appear
+  For each player in a "ghostPopLocation" key
+  Parametres
+  ----------
+  ghost1 and ghost2: list of strings, the list contains the splitted items from lines (line 3 and line 4)
+
+  Return
+  -------
+  Players: dictionary 
+  """
   ghost1 = lines[3].split()
   ghost2 = lines[4].split()
   Players[1]["ghosts"][(int(ghost1[1]), (int(ghost1[2])))] =  10
@@ -49,12 +80,28 @@ def setInitialGhostsAndPopSpot(Players,lines=getLines()):
   Players[2]["ghostsLocationList"].append((int(ghost2[1]),int(ghost2[2])))
   return Players
 # 21,90
-#RETURN CORRECT EMOJI
+
 def returnCorrectMagicEmoji(magicValue):
+ """Returns correct emoji
+   Paramaters
+   ----------
+   MagicValueDict: Dictionary with key the amount of points and value the corresponding emoji
+   Return
+   ---------
+   magicvalue: the correct emoji"""
    magicValueDict = {10:'🥨',30:'🍟',50:'🍜',100:'🌯',500:'🍺'}
    return magicValueDict[magicValue]
-#RETURN CORRECT EMOJI
+
 def returnCorrectGhostEmoji(PlayerID,case,health):
+"""Returns correct emoji of the ghost according to the health of the ghost
+   Parameters
+   ----------
+   case: coordinates of the location of the ghost
+   Health: health of the ghost
+   return
+   -----
+   emo: correct emoji
+   
    healthValueDict = {1:("😇","👺"),2:("🧐","😈"),3:("😎","👿"),4:("XX","😡"),5:("😖","XX"),6:("💩","🤬")}
    if health == 100 :
       emo = healthValueDict[1][PlayerID]
@@ -72,6 +119,12 @@ def returnCorrectGhostEmoji(PlayerID,case,health):
 
 #PRINTINITIALY 
 def printBoards(MapXY,MagicList,MagicDict,Players):
+"""print the board with all the atributes on it
+    Parameters
+    ----------
+    MapXY:list with the coordinates of the board
+    MagicList: List with the coordinates of the magic 
+    """
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     #PRINT THE NUMBERS ON THE EDGES
     for x in range(1,MapXY[0]+1):
@@ -134,6 +187,7 @@ def printBoards(MapXY,MagicList,MagicDict,Players):
 #UpdateGhostsPannelforP1andP2
 # to add :JUMP TO COLUMN B ONCE YOU HAVE NO LINES IN COLUMN A
 def updateGhostsPannel(Players,MapXY):
+"""Updates the state of the board"""
   for player in [1,2]:
       if player == 1 :
         startprint = 0
@@ -142,10 +196,16 @@ def updateGhostsPannel(Players,MapXY):
       for ghost in range(len(Players[player]['ghostsLocationList'])):
         print(term.move_xy(startprint,ghost+7)+term.white3+'•'+str(Players[player]['ghostsLocationList'][ghost][0])+'-'+str(Players[player]['ghostsLocationList'][ghost][1])+':'+str(Players[player]['ghosts'][Players[player]['ghostsLocationList'][ghost]])+'%'+term.normal+term.move_xy(190,190),end='',flush=True)
 
-
-#check if cuur location and futur location or target is Adjacent
 def IsItAdjacent(currtuple,futuple):
-
+"""Check if the current and futur location or the target are adjacent
+   Parameters
+   ----------
+   currtuple: list with the coordinates of the current location of the ghost(str)
+   futuple: list with coordinates of the futur location of the ghost(str)
+   returns
+   -------
+   True: when the locations or target are adjacent
+   False: when the locations or the target aren't adjacent"""
 
     if (futuple[0] == (currtuple[0] + 1)) and ((futuple[1] ==currtuple[1]) or (futuple[1] ==(currtuple[1] +1)) or (futuple[1] == (currtuple[1] -1))):
         return True
@@ -157,6 +217,15 @@ def IsItAdjacent(currtuple,futuple):
         return False
 
 def isCaseFree(Players,futuple):
+"""checks if the future location of the ghost is free
+   Parameters
+   ----------
+   futuple: list of coordinates of the future location of the ghost(str)
+   Players: main dictionary
+   Returns
+   ------
+   free: the location is free or not"""
+   
    free=True
    allghostsLocation= Players[1]["ghostsLocationList"] + Players[2]["ghostsLocationList"]
    allPlayersPopLocation= Players[1]["ghostPopLocation"] + Players[2]["ghostPopLocation"]   
@@ -166,6 +235,15 @@ def isCaseFree(Players,futuple):
    
 
 def moveGhost(Players,PlayerID,currtuple,futuple):
+"""Moves the ghost to another location
+   Parameters
+   ----------
+   currtuple: list with the coordinates of the current location of the ghost(str)
+   futuple: list with coordinates of the futur location of the ghost(str)
+   Returns
+   ------
+   PLayers: main dictionary
+   
    if currtuple in Players[PlayerID]["ghostsLocationList"] and isCaseFree(Players,futuple) == True and IsItAdjacent(currtuple,futuple) == True:
     holdHealth=Players[PlayerID]["ghosts"][currtuple]
     del Players[PlayerID]["ghosts"][currtuple]
@@ -182,6 +260,13 @@ def moveGhost(Players,PlayerID,currtuple,futuple):
 
 #Take orders from players and stock them in a list
 def getOrderslist(MapXY):
+"""Takes orders from players and stock them in a list
+    Parameters
+    ----------
+    orderslistP1P2: empty dictionary
+    Returns
+    -------
+    orderslistP1P2: dictionary with a list of the orders from the players"""
     orderslistP1P2=[]
     for player in [1,2]:
       if player == 1 :
@@ -195,6 +280,12 @@ def getOrderslist(MapXY):
     return orderslistP1P2
 
 def Invokeghost (Players,PlayerID):
+"""Invoke a new ghost
+    Parameters
+    ----------
+    Players: a dictionary
+    PlayersID: ID of the players in the dictionary"""
+    
     if Players[PlayerID]["magic"] >= 300 and (not(Players[PlayerID]["ghostPopLocation"] in Players[PlayerID]["ghostsLocationList"])):
         Players[PlayerID]["magic"] -= 300
         Players[PlayerID]["ghostsLocationList"].append((Players[PlayerID]["ghostPopLocation"][0],Players[PlayerID]["ghostPopLocation"][1]))
@@ -213,8 +304,9 @@ def updateGhostsNumberDisplay(Players,MapXY):
    print(term.move_xy(11,4)+str(len(Players[1]['ghostsLocationList']))+term.normal+term.move_xy(70,70),end='',flush=True)
    print(term.move_xy(25+MapXY[0]*2+10,4)+str(len(Players[2]['ghostsLocationList']))+term.normal+term.move_xy(70,70),end='',flush=True)
               
-#2- HEAL ghost with chosen amount and reduce twice the amount from magic
 def Healghost(Players,PlayerID,targetGhost,amount,ghostjobdone):
+"""Heal ghost with chosen amount and reduce twice the amount from magic
+
     if targetGhost in Players[PlayerID]["ghostsLocationList"] and Players[PlayerID]["magic"] >= (amount*2) and (Players[PlayerID]["ghosts"][targetGhost] + amount <= 100) and (targetGhost not in ghostjobdone) :
        Players[PlayerID]["ghosts"][targetGhost] += amount
        Players[PlayerID]["magic"] -= (amount*2)
@@ -223,6 +315,7 @@ def Healghost(Players,PlayerID,targetGhost,amount,ghostjobdone):
 
 
 def transformOrder (splitted):
+"""Transforms the orders of the player in to a list"""
     firsthalflist=splitted[0].split("-")
     firstTuple=(int(firsthalflist[0]),int(firsthalflist[1]))
     lol = splitted[1][0+1:]
