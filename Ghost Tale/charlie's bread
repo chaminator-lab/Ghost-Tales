@@ -494,6 +494,7 @@ def moveVisual(Players,PlayerID,currtuple,futuple):
    return  None
 
 def reEstablishCase(Players,MapXY,case,MagicDict,MagicList):
+   """adds the original color of the case back 
    if case in MagicList:
       if (case[0]+case[1])%2 == 0 :
             print(term.move_xy(25+case[0]*2,case[1])+term.on_color_rgb(44,95,45)+returnCorrectMagicEmoji(MagicDict[case])+term.normal+term.move_xy(50,50),end='',flush=True)
