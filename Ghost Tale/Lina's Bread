@@ -1,1 +1,13 @@
+def Invokeghost (Players,PlayerID):
+Probleme rencontrer:
+Je pensais qu’il fallait vérifier s’il y avait pas de fantôme du joueur1 et joueur2 dans la case d’apparition de celui qui donne l’ordre d’invoquer un fantôme mais au final il suffit de vérifier seulement les fantômes du joueur qui invoque car les fantômes adverse n’ont pas le pouvoir de se déplacer sur la case d’apparition de leur adversaire.
+def grantMagic(Players,PlayerID,from_to,MagicList,MagicDict,ghostsdone):
+Probleme rencontrer:
+J’ai eu des difficulté à trouver un moyen de supprimer le tulpe correspondant à la case magic de la liste des case magie , j’ai dû créer une fonction deleteFromMagicList
+def displayScoreGhostZero(Players,MapXY):
+Probleme rencontrer:
+L’hors de la supression avec term.home + term.clear les paneaux de points de magie ne disparessent pas de l’écran 
+def displayScore(Players,MapXY):
+Probleme rencontrer:
+L’hors de la supression avec term.home + term.clear les paneaux de points de magie ne disparessent pas de l’écran 
 
