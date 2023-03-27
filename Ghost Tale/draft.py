@@ -4,7 +4,11 @@ import random
 import blessed
 term=blessed.Terminal()
 def getLines(map_path):#NATAN
-  """Opens the file and returns each line in a list """
+  """Opens the file and returns each line in a list
+  Version
+  -------
+  specification: Natan Fontanella (v.1 10/03/23)
+  implementation: Natan Fontanella (v.1 22/03/23) """
 #    //FILE PATH TO CORRECT //
 
   fh = open(str(map_path), "r")
@@ -19,7 +23,12 @@ def initialiseMapXY(map_path):#NATAN
 
   Return
   -----------
-  MapXY: Empty dictionary 
+  MapXY: Empty dictionary
+  Version
+  -------
+  specification: Natan Fontanella (v.1 10/03/23)
+  implementation: Natan Fontanella (v.1 22/03/23)
+   
   """
   MapXY=[]
   map =  getLines(map_path)[1].split()
@@ -36,6 +45,10 @@ def getMagicDict(map_path):#NATAN
    Return
    ------
    MagicDict
+   Version
+   -------
+   specification: Natan Fontanella (v.1 10/03/23)
+   implementation: Natan Fontanella (v.1 22/03/23)
    """
    MagicDict = {}
    #Set MagicDict
@@ -52,6 +65,10 @@ def getMagicList(map_path):#NATAN
   Return
   -------
   MagicLict
+  Version
+  -------
+  specification: Natan Fontanella (v.1 10/03/23)
+  implementation: Natan Fontanella (v.1 22/03/23)
   """
   MagicList=[]
   for i in range(6 , len(getLines(map_path))):
@@ -70,6 +87,10 @@ def setInitialGhostsAndPopSpot(Players,lines):#HABIB
   Return
   -------
   Players: dictionary 
+  Version
+  -------
+   specification: Mohamed El Habib Benouis (v.1 09/03/23)
+   implementation: Mohamed El Habib Benouis(v.1 25/03/23)
   """
   ghost1 = lines[3].split()
   ghost2 = lines[4].split()
@@ -92,7 +113,12 @@ def returnCorrectMagicEmoji(magicValue):#LINA
    MagicValueDict: Dictionary with key the amount of points and value the corresponding emoji
    Return
    ---------
-   magicvalue: the correct emoji"""
+   magicvalue: the correct emoji
+   Version
+  -------
+   specification: Lina El Khattabi (v.1 07/03/23)
+   implementation: Lina El Khattabi(v.1 25/03/23)
+   """
    magicValueDict = {10:'🥨',30:'🍟',50:'🍜',100:'🌯',500:'🍺'}
    return magicValueDict[magicValue]
 
@@ -104,7 +130,12 @@ def returnCorrectGhostEmoji(PlayerID,case,health):#LINA
    Health: health of the ghost
    return
    -----
-   emo: correct emoji"""
+   emo: correct emoji
+   Version
+   -------
+   specification: Lina El Khattabi (v.1 07/03/23)
+   implementation: Lina El Khattabi(v.1 25/03/23)
+   """
    healthValueDict = {1:("😇","👺"),2:("🧐","👹"),3:("😎","😈"),4:("😞","👿"),5:("😖","😡"),6:("💩","🤬")}
    if health == 100 :
       emo = healthValueDict[1][PlayerID]
@@ -126,6 +157,10 @@ def printBoards(MapXY,MagicList,MagicDict,Players):#HABIB
     ----------
     MapXY:list with the coordinates of the board
     MagicList: List with the coordinates of the magic 
+  Version
+  -------
+   specification: Mohamed El Habib Benouis (v.1 09/03/23)
+   implementation: Mohamed El Habib Benouis(v.1 25/03/23)
     """
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     #PRINT THE NUMBERS ON THE EDGES
@@ -186,7 +221,12 @@ def printBoards(MapXY,MagicList,MagicDict,Players):#HABIB
     print(term.move_xy(25+MapXY[0]*2+21,4)+term.on_color_rgb(223,173,223)+':  👻'+term.move_xy(25+MapXY[0]*2+10,4)+str(len(Players[2]['ghostsLocationList']))+term.normal+term.move_xy(45,45),end='',flush=True)
 
 def updateGhostsPannel(Players,MapXY):#HABIB
-  """Updates the state of the board"""
+  """Updates the state of the board
+  Version
+  -------
+   specification: Mohamed El Habib Benouis (v.1 09/03/23)
+   implementation: Mohamed El Habib Benouis(v.1 25/03/23)  
+  """
   for player in [1,2]:
       if player == 1 :
         startprint = 0
@@ -210,7 +250,11 @@ def IsItAdjacent(currtuple,futuple):#CHARLIE
    returns
    -------
    True: when the locations or target are adjacent
-   False: when the locations or the target aren't adjacent"""
+   False: when the locations or the target aren't adjacent
+   Version
+   -------
+   specification: Charlotte Van de Velde (v.1 09/03/23)
+   implementation: Charlotte Van de Velde (v.1 23/03/23)"""
     if (futuple[0] == (currtuple[0] + 1)) and ((futuple[1] ==currtuple[1]) or (futuple[1] ==(currtuple[1] +1)) or (futuple[1] == (currtuple[1] -1))):
         return True
     elif (futuple[0] == (currtuple[0]-1)) and ((futuple[1]==currtuple[1]) or (futuple[1] ==(currtuple[1] +1)) or (futuple[1] == (currtuple[1] -1))):
@@ -228,7 +272,11 @@ def isCaseFree(Players,futuple):#CHARLIE
    Players: main dictionary
    Returns
    ------
-   free: the location is free or not"""
+   free: the location is free or not
+   Version
+   -------
+   specification: Charlotte Van de Velde (v.1 09/03/2023)
+   Implementation: Charlotte Van de Velde (v.1 23/03/2023)"""
    free=True
    allghostsLocation= Players[1]["ghostsLocationList"] + Players[2]["ghostsLocationList"]
    allPlayersPopLocation= [Players[1]["ghostPopLocation"], Players[2]["ghostPopLocation"]]   
@@ -244,7 +292,12 @@ def moveGhost(Players,PlayerID,currtuple,futuple,ghostsdone,movementflag):#HABIB
    futuple: list with coordinates of the futur location of the ghost(str)
    Returns
    ------
-   PLayers: main dictionary"""
+   PLayers: main dictionary
+   Version
+  -------
+   specification: Mohamed El Habib Benouis (v.1 09/03/23)
+   implementation: Mohamed El Habib Benouis(v.1 25/03/23)
+   """
    if currtuple in Players[PlayerID]["ghostsLocationList"]and currtuple not in ghostsdone and isCaseFree(Players,futuple) == True and IsItAdjacent(currtuple,futuple) == True:
       movementflag = True
       holdHealth=Players[PlayerID]["ghosts"][currtuple]
@@ -266,7 +319,12 @@ def getOrderslist(MapXY,type_1,type_2, Players,MagicDict,MagicList):#HABIB
     orderslistP1P2: empty dictionary
     Returns
     -------
-    orderslistP1P2: dictionary with a list of the orders from the players"""
+    orderslistP1P2: dictionary with a list of the orders from the players
+    Version
+   -------
+   specification: Mohamed El Habib Benouis (v.1 09/03/23)
+   implementation: Mohamed El Habib Benouis(v.1 25/03/23)
+    """
     orderslistP1P2=[]
     if type_1 == type_2 and type_1 == "human":
       for player in [1,2]:
@@ -318,7 +376,12 @@ def Invokeghost (Players,PlayerID,ghostsdone):#LINA
     Parameters
     ----------
     Players: a dictionary
-    PlayersID: ID of the players in the dictionary"""
+    PlayersID: ID of the players in the dictionary
+    Version
+    -------
+    specification: Lina El Khattabi (v.1 07/03/23)
+    implementation: Lina El Khattabi(v.1 25/03/23)
+    """
     if Players[PlayerID]["magic"] >= 300 and (not(Players[PlayerID]["ghostPopLocation"] in Players[PlayerID]["ghostsLocationList"])):
         Players[PlayerID]["magic"] -= 300
         Players[PlayerID]["ghostsLocationList"].append((Players[PlayerID]["ghostPopLocation"][0],Players[PlayerID]["ghostPopLocation"][1]))
@@ -331,17 +394,29 @@ def Invokeghost (Players,PlayerID,ghostsdone):#LINA
     return Players
 
 def updateMagicDisplay(Players,MapXY):#CHARLIE
-   """Updates the magicpoints of each player on the display"""
+   """Updates the magicpoints of each player on the display
+   Version
+   -------
+   Specification: Charlotte Van de velde (v.1 09/03/23)
+   Implementation: Charlotte Van de Velde (v.1 23/03/23)"""
    print(term.move_xy(11,2)+term.on_color_rgb(173,173,223)+"     "+term.move_xy(11,2)+str(Players[1]['magic'])+term.move_xy(70,70),end='',flush=True)
    print(term.move_xy(25+MapXY[0]*2+10,2)+term.on_color_rgb(223,173,223)+"     "+term.move_xy(25+MapXY[0]*2+10,2)+str(Players[2]['magic'])+term.move_xy(70,70),end='',flush=True)
 
 def updateGhostsNumberDisplay(Players,MapXY):#CHARLIE
-   """Updates the number of the amount of ghost each player has"""
+   """Updates the number of the amount of ghost each player has
+   Version
+   -------
+   Specification: Charlotte Van de velde (v.1 09/03/23)
+   Implementation: Charlotte Van de Velde (v.1 23/03/23)"""
    print(term.move_xy(11,4)+term.on_color_rgb(173,173,223)+str(len(Players[1]['ghostsLocationList']))+term.normal+term.move_xy(70,70),end='',flush=True)
    print(term.move_xy(25+MapXY[0]*2+10,4)+term.on_color_rgb(223,173,223)+str(len(Players[2]['ghostsLocationList']))+term.normal+term.move_xy(70,70),end='',flush=True)             
 
 def Healghost(Players,PlayerID,targetGhost,amount,ghostsdone):#CHARLIE
-    """Heal ghost with chosen amount and reduce twice the amount from magic"""
+    """Heal ghost with chosen amount and reduce twice the amount from magic
+    Version
+    -------
+    Specification: Charlotte Van de velde (v.1 09/03/23)
+    Implementation: Charlotte Van de Velde (v.1 21/03/23)"""
     if targetGhost in Players[PlayerID]["ghostsLocationList"] and Players[PlayerID]["magic"] >= (amount*2) and (Players[PlayerID]["ghosts"][targetGhost] + amount <= 100) and (targetGhost not in ghostsdone) :
        Players[PlayerID]["ghosts"][targetGhost] += amount
        Players[PlayerID]["magic"] -= (amount*2)
@@ -350,7 +425,11 @@ def Healghost(Players,PlayerID,targetGhost,amount,ghostsdone):#CHARLIE
 
 def transformOrder (splitted):#CHARLIE
     """Transforms the orders of the player into a list
-    splitted: the orders of the player"""
+    splitted: the orders of the player
+    Version
+    -------
+    Specification: Charlotte Van de velde (v.1 09/03/23)
+    Implementation: Charlotte Van de Velde (v.1 21/03/23)"""
     firsthalflist=splitted[0].split("-")
     firstTuple=(int(firsthalflist[0]),int(firsthalflist[1]))
     lol = splitted[1][0+1:]
@@ -367,6 +446,10 @@ def deletefromMagiclist(case,MagicList):#LINA
     Returns
     -------  
     MagicList: Empty list
+    Version
+    -------
+    specification: Lina El Khattabi (v.1 07/03/23)
+    implementation: Lina El Khattabi(v.1 25/03/23)
  """  
      iid=-1
      for k in range(len(MagicList)):
@@ -381,7 +464,12 @@ def deletefromghostlist(case,Players):#LINA
    Parameters
    ----------
    case: coordinates of the location of the ghost   
-   Players: Main dictionary"""
+   Players: Main dictionary
+   Version
+   -------
+   specification: Lina El Khattabi (v.1 07/03/23)
+   implementation: Lina El Khattabi(v.1 25/03/23)
+   """
    for i in [0,1]:
      iid=-1
      for k in range(len(Players[i+1]["ghostsLocationList"])):
@@ -399,7 +487,12 @@ def grantMagic(Players,PlayerID,from_to,MagicList,MagicDict,ghostsdone):#LINA
    from_to: coordinates of the location of the ghost 
    MagicList: Empty list
    MagicDict: Empty dictionary
-   ghostsdone: list des ghost qui ont deja exucuter une action"""
+   ghostsdone: list des ghost qui ont deja exucuter une action
+   Version
+   -------
+   specification: Lina El Khattabi (v.1 07/03/23)
+   implementation: Lina El Khattabi(v.1 25/03/23)
+   """
    if from_to in MagicList:
       Players[PlayerID]["magic"] += MagicDict[from_to]
       ghostsdone.append(from_to)
@@ -414,7 +507,11 @@ def transformOrderForGathering(splitted):#CHARLIE
     splitted: list of orders from the player
     Returns
     -------
-    firsttuple: list with the first part of the orders"""
+    firsttuple: list with the first part of the orders
+   Version
+   -------
+    Specification: Charlotte Van de velde (v.1 09/03/23)
+    Implementation: Charlotte Van de Velde (v.1 21/03/23)"""
 
     firsthalflist=splitted[0].split("-")
     firstTuple=(int(firsthalflist[0]),int(firsthalflist[1]))   
@@ -424,7 +521,11 @@ def transformOrderForHeals (splitted):#CHARLIE
     """Transforms orders for the function Heal
     Returns
     -------
-    fulltuple: list of orders for the function Heal"""
+    fulltuple: list of orders for the function Heal
+    Version
+    -------
+    Specification: Charlotte Van de velde (v.1 09/03/23)
+    Implementation: Charlotte Van de Velde (v.1 23/03/23)"""
     firsthalflist=splitted[0].split("-")
     firstTuple=(int(firsthalflist[0]),int(firsthalflist[1]))
     lol = splitted[1][0+1:]
@@ -434,7 +535,12 @@ def transformOrderForHeals (splitted):#CHARLIE
     return fulltuple 
 
 def cleanOrders(list):#HABIB
-  """Checks the function of the orders and puts them in a list"""
+  """Checks the function of the orders and puts them in a list
+  Version
+  -------
+   specification: Mohamed El Habib Benouis (v.1 09/03/23)
+   implementation: Mohamed El Habib Benouis(v.1 25/03/23)
+  """
   newlist=[[],[]]
   for i in [0,1]:
     if "ghost" in list[i] :
@@ -473,13 +579,22 @@ def cleanOrders(list):#HABIB
   return newlist
 
 def updateemoji(Players):#LINA
-   """Updats the emoji of the ghost"""
+   """Updates the emoji of the ghost
+  Version
+  -------
+   specification: Lina El Khattabi (v.1 07/03/23)
+   implementation: Lina El Khattabi(v.1 25/03/23)
+   """
    for i in [0,1]:  
      for case in Players[i+1]["ghostsLocationList"]:
         print(term.move_xy(25+case[0]*2,case[1])+term.on_blue+returnCorrectGhostEmoji(i,case,Players[i+1]["ghosts"][case])+term.normal+term.move_xy(50,50),end ='',flush=True)  
 
 def moveVisual(Players,PlayerID,currtuple,futuple):#CHARLIE
-   """adds the original color of the case back and moves the emoji of the ghost to the correct case"""
+   """adds the original color of the case back and moves the emoji of the ghost to the correct case
+   Version
+   -------
+   Specification: Charlotte Van de velde (v.1 09/03/23)
+   Implementation: Charlotte Van de Velde (v.1 23/03/23)"""
    if (currtuple[0]+currtuple[1])%2 ==0 :
      print(term.move_xy(25+currtuple[0]*2,currtuple[1])+term.on_color_rgb(44,95,45)+'  '+term.normal+term.move_xy(50,50),end ='',flush=True)
    else:
@@ -488,7 +603,12 @@ def moveVisual(Players,PlayerID,currtuple,futuple):#CHARLIE
    return  None
 
 def reEstablishCase(Players,MapXY,case,MagicDict,MagicList):#HABIB
-   """adds the original color of the case back"""
+   """adds the original color of the case back
+   Version
+  -------
+   specification: Mohamed El Habib Benouis (v.1 09/03/23)
+   implementation: Mohamed El Habib Benouis(v.1 25/03/23)
+   """
    if case in MagicList:
       if (case[0]+case[1])%2 == 0 :
             print(term.move_xy(25+case[0]*2,case[1])+term.on_color_rgb(44,95,45)+returnCorrectMagicEmoji(MagicDict[case])+term.normal+term.move_xy(50,50),end='',flush=True)
@@ -500,7 +620,12 @@ def reEstablishCase(Players,MapXY,case,MagicDict,MagicList):#HABIB
        print(term.move_xy(25+case[0]*2,case[1])+term.on_color_rgb(173,223,173)+'  '+term.normal+term.move_xy(50,50),end='',flush=True) 
    
 def Phase1(Correctorrders,Players,MapXY,ghostsdone):#LINA
-     """Phase one of game: Invokes a ghost and updates the display"""
+     """Phase one of game: Invokes a ghost and updates the display
+      Version
+     -------
+     specification: Lina El Khattabi (v.1 07/03/23)
+     implementation: Lina El Khattabi(v.1 25/03/23)
+     """
      for i in [0,1]:
        if 'ghost' in Correctorrders[i]:
          Invokeghost(Players,i+1,ghostsdone)
@@ -511,7 +636,11 @@ def Phase1(Correctorrders,Players,MapXY,ghostsdone):#LINA
          del Correctorrders[i][0]
 
 def Phase2(Correctorrders,Players,MapXY,ghostsdone):#CHARLIE
-     """Phase two of the game: Heals the ghost and updates the display"""
+     """Phase two of the game: Heals the ghost and updates the display
+     Version
+     -------
+     Specification: Charlotte Van de velde (v.1 09/03/23)
+     Implementation: Charlotte Van de Velde (v.1 23/03/23)"""
      for i in [0,1]:
       for order in Correctorrders[i]:
         splitted=order.split(':')
@@ -525,7 +654,12 @@ def Phase2(Correctorrders,Players,MapXY,ghostsdone):#CHARLIE
           updateemoji(Players)  
 
 def Phase3(Correctorrders,Players,MapXY,MagicList,MagicDict,ghostsdone):#HABIB
-     """Phase tree of the game: Collects the magic and updates the display"""
+     """Phase tree of the game: Collects the magic and updates the display
+    Version
+    -------
+   specification: Mohamed El Habib Benouis (v.1 09/03/23)
+   implementation: Mohamed El Habib Benouis(v.1 25/03/23) 
+     """
      for i in [0,1]:
       for order in Correctorrders[i]:
         splitted=order.split(':')
@@ -536,7 +670,12 @@ def Phase3(Correctorrders,Players,MapXY,MagicList,MagicDict,ghostsdone):#HABIB
           
           
 def Phase4(Correctorrders,Players,MapXY,ghostsdone,MagicDict,MagicList,deathflag):#HABIB
-     """Phase four of the magic: Attacks ghost and updates the display"""
+     """Phase four of the magic: Attacks ghost and updates the display
+     Version
+    -------
+    specification: Mohamed El Habib Benouis (v.1 09/03/23)
+    implementation: Mohamed El Habib Benouis(v.1 25/03/23)
+     """
      P1P2attackOrders=[]
      for i in [0,1]:
       for order in Correctorrders[i]:
@@ -570,7 +709,11 @@ def Phase4(Correctorrders,Players,MapXY,ghostsdone,MagicDict,MagicList,deathflag
                  updateGhostsPannel(Players,MapXY)
                  updateGhostsNumberDisplay(Players,MapXY)     
 def Phase5(Correctorrders,Players,MapXY,ghostsdone,MagicDict,MagicList,movementflag):#CHARLIE
-     """Phase five of the game: Moves the ghost and updates the display"""
+     """Phase five of the game: Moves the ghost and updates the display
+     Version
+     -------
+     Specification: Charlotte Van de velde (v.1 09/03/23)
+     Implementation: Charlotte Van de Velde (v.1 22/03/23)"""
      for i in [0,1]:
       for order in Correctorrders[i]:
         movementflag == False
@@ -591,13 +734,22 @@ def Phase6(Players,MapXY):#NATAN
       ----------
       Players: A dictionary
       MapXY: Empty dictionary
+     Version
+     -------
+    specification: Natan Fontanella (v.1 10/03/23)
+    implementation: Natan Fontanella (v.1 22/03/23)
       """
      for i in [1,2]:
         Players[i]["magic"] +=  10
      updateMagicDisplay(Players,MapXY)
 
 def aiOrders(Players,PlayerID,MapXY,MagicDict,MagicList):#HABIB
-    """Orders of the AI"""
+    """Orders of the AI
+    Version
+    -------
+   specification: Mohamed El Habib Benouis (v.1 09/03/23)
+   implementation: Mohamed El Habib Benouis(v.1 25/03/23)
+    """
     aiOrdersString =""                             
    #GHOST BUYING DECISION
     if Players[PlayerID]["ghostPopLocation"] in Players[PlayerID]["ghostsLocationList"] :
@@ -627,6 +779,10 @@ def displayScoreGhostZero(Players,MapXY):#LINA
    ----------
    Players: A dictionary
    MapXY: Empty dictionary
+   Version
+   -------
+   specification: Lina El Khattabi (v.1 07/03/23)
+   implementation: Lina El Khattabi(v.1 25/03/23)
    """
    print(term.home+term.clear)
    if len(Players[2]["ghostsLocationList"]) == 0 and len(Players[1]["ghostsLocationList"]) == 0 : 
@@ -642,6 +798,10 @@ def displayScore(Players,MapXY):#LINA
    ----------
    Players: A dictionary
    MapXY: Empty dictionary
+   Version
+   -------
+   specification: Lina El Khattabi (v.1 07/03/23)
+   implementation: Lina El Khattabi(v.1 25/03/23)
    """
    print(term.home+term.clear)
    if Players[1]["magic"] > Players[2]["magic"] : 
