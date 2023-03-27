@@ -47,7 +47,7 @@ def setInitialGhostsAndPopSpot(Players,lines):#HABIB
   return Players
 # 21,90
 #RETURN CORRECT EMOJI
-def returnCorrectMagicEmoji(magicValue):
+def returnCorrectMagicEmoji(magicValue):#LINA
    magicValueDict = {10:'🥨',30:'🍟',50:'🍜',100:'🌯',500:'🍺'}
    return magicValueDict[magicValue]
 #RETURN CORRECT EMOJI
