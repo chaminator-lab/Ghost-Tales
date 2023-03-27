@@ -150,7 +150,7 @@ def IsItAdjacent(currtuple,futuple):#CHARLIE
         return True
     else:
         return False
-def isCaseFree(Players,futuple):
+def isCaseFree(Players,futuple):#CHARLIE
    free=True
    allghostsLocation= Players[1]["ghostsLocationList"] + Players[2]["ghostsLocationList"]
    allPlayersPopLocation= [Players[1]["ghostPopLocation"], Players[2]["ghostPopLocation"]]   
