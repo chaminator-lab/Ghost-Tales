@@ -3,9 +3,8 @@ import time
 import random
 import blessed
 term=blessed.Terminal()
-def getLines(map_path):#NATAN
-#    //FILE PATH TO CORRECT //
 
+def getLines(map_path):#NATAN
   fh = open(str(map_path), "r")
   lines = fh.readlines()
   return lines
@@ -127,7 +126,7 @@ def printBoards(MapXY,MagicList,MagicDict,Players):#HABIB
     print(term.move_xy(25+MapXY[0]*2+21,4)+term.on_color_rgb(223,173,223)+':  👻'+term.move_xy(25+MapXY[0]*2+10,4)+str(len(Players[2]['ghostsLocationList']))+term.normal+term.move_xy(45,45),end='',flush=True)
 #UpdateGhostsPannelforP1andP2
 # to add :JUMP TO COLUMN B ONCE YOU HAVE NO LINES IN COLUMN A
-def updateGhostsPannel(Players,MapXY):
+def updateGhostsPannel(Players,MapXY):#HABIB
   for player in [1,2]:
       if player == 1 :
         startprint = 0
@@ -243,7 +242,7 @@ def Healghost(Players,PlayerID,targetGhost,amount,ghostsdone):#CHARLIE
        Players[PlayerID]["magic"] -= (amount*2)
        ghostsdone.append(targetGhost)
     return Players
-def transformOrder (splitted):
+def transformOrder (splitted): #CHARLIE
     firsthalflist=splitted[0].split("-")
     firstTuple=(int(firsthalflist[0]),int(firsthalflist[1]))
     lol = splitted[1][0+1:]
@@ -276,11 +275,11 @@ def grantMagic(Players,PlayerID,from_to,MagicList,MagicDict,ghostsdone):#LINA
       deletefromMagiclist(from_to,MagicList)
 
 
-def transformOrderForGathering(splitted):
+def transformOrderForGathering(splitted):#CHARLIE
     firsthalflist=splitted[0].split("-")
     firstTuple=(int(firsthalflist[0]),int(firsthalflist[1]))   
     return firstTuple
-def transformOrderForHeals (splitted):
+def transformOrderForHeals (splitted):#CHARLIE
     firsthalflist=splitted[0].split("-")
     firstTuple=(int(firsthalflist[0]),int(firsthalflist[1]))
     lol = splitted[1][0+1:]
@@ -330,15 +329,14 @@ def updateemoji(Players):#LINA
      for case in Players[i+1]["ghostsLocationList"]:
         print(term.move_xy(25+case[0]*2,case[1])+term.on_blue+returnCorrectGhostEmoji(i,case,Players[i+1]["ghosts"][case])+term.normal+term.move_xy(50,50),end ='',flush=True)  
 
-
-def moveVisual(Players,PlayerID,currtuple,futuple):
+def moveVisual(Players,PlayerID,currtuple,futuple):#CHARLIE
    if (currtuple[0]+currtuple[1])%2 ==0 :
      print(term.move_xy(25+currtuple[0]*2,currtuple[1])+term.on_color_rgb(44,95,45)+'  '+term.normal+term.move_xy(50,50),end ='',flush=True)
    else:
      print(term.move_xy(25+currtuple[0]*2,currtuple[1])+term.on_color_rgb(173,223,173)+'  '+term.normal+term.move_xy(50,50),end ='',flush=True)
    print(term.move_xy(25+futuple[0]*2,futuple[1])+term.on_blue+returnCorrectGhostEmoji(PlayerID-1,futuple,Players[PlayerID]["ghosts"][futuple])+term.normal+term.move_xy(50,50),end ='',flush=True)
    return  None
-def reEstablishCase(Players,MapXY,case,MagicDict,MagicList):
+def reEstablishCase(Players,MapXY,case,MagicDict,MagicList):#HABIB
    if case in MagicList:
       if (case[0]+case[1])%2 == 0 :
             print(term.move_xy(25+case[0]*2,case[1])+term.on_color_rgb(44,95,45)+returnCorrectMagicEmoji(MagicDict[case])+term.normal+term.move_xy(50,50),end='',flush=True)
@@ -348,16 +346,16 @@ def reEstablishCase(Players,MapXY,case,MagicDict,MagicList):
        print(term.move_xy(25+case[0]*2,case[1])+term.on_color_rgb(44,95,45)+'  '+term.normal+term.move_xy(50,50),end='',flush=True)
    else:
        print(term.move_xy(25+case[0]*2,case[1])+term.on_color_rgb(173,223,173)+'  '+term.normal+term.move_xy(50,50),end='',flush=True)  
-def Phase1(Correctorrders,Players,MapXY,ghostsdone):
+
+def Phase1(Correctorrders,Players,MapXY,ghostsdone):#LINA
      for i in [0,1]:
        if 'ghost' in Correctorrders[i]:
-         Invokeghost(Players,i+1,ghostsdone)
-         
+         Invokeghost(Players,i+1,ghostsdone)   
          updateMagicDisplay(Players,MapXY)
          updateGhostsNumberDisplay(Players,MapXY)
          updateGhostsPannel(Players,MapXY)
          del Correctorrders[i][0]
-def Phase2(Correctorrders,Players,MapXY,ghostsdone):
+def Phase2(Correctorrders,Players,MapXY,ghostsdone):#CHARLIE
      for i in [0,1]:
       for order in Correctorrders[i]:
         splitted=order.split(':')
@@ -377,8 +375,7 @@ def Phase3(Correctorrders,Players,MapXY,MagicList,MagicDict,ghostsdone):
           from_to=transformOrderForGathering(splitted)
           grantMagic(Players,i+1,from_to,MagicList,MagicDict,ghostsdone)  
           updateMagicDisplay(Players,MapXY)
-          
-          
+                 
 def Phase4(Correctorrders,Players,MapXY,ghostsdone,MagicDict,MagicList,deathflag):#HABIB
      P1P2attackOrders=[]
      for i in [0,1]:
@@ -411,7 +408,7 @@ def Phase4(Correctorrders,Players,MapXY,ghostsdone,MagicDict,MagicList,deathflag
                  updateMagicDisplay(Players,MapXY)
                  updateGhostsPannel(Players,MapXY)
                  updateGhostsNumberDisplay(Players,MapXY)     
-def Phase5(Correctorrders,Players,MapXY,ghostsdone,MagicDict,MagicList,movementflag):
+def Phase5(Correctorrders,Players,MapXY,ghostsdone,MagicDict,MagicList,movementflag):#CHARLIE
      for i in [0,1]:
       for order in Correctorrders[i]:
         movementflag == False
@@ -430,7 +427,6 @@ def Phase6(Players,MapXY):#LINA DONE
      for i in [1,2]:
         Players[i]["magic"] +=  10
      updateMagicDisplay(Players,MapXY)
-
 
 def aiOrders(Players,PlayerID,MapXY,MagicDict,MagicList):#HABIB
     aiOrdersString =""                             
@@ -454,7 +450,6 @@ def aiOrders(Players,PlayerID,MapXY,MagicDict,MagicList):#HABIB
     time.sleep(0.5)
     return aiOrdersString
 
-
 def displayScoreGhostZero(Players,MapXY):#LINA
    print(term.home+term.clear)
    if len(Players[2]["ghostsLocationList"]) == 0 and len(Players[1]["ghostsLocationList"]) == 0 : 
@@ -463,9 +458,6 @@ def displayScoreGhostZero(Players,MapXY):#LINA
      print(term.move_xy(round(term.width/3),round(term.height/3)),"𝕋H𝔼 𝕎𝕀NN𝔼R 𝕀𝕊 :P𝕃𝔸𝕐𝔼R 𝕋𝕎𝕆  🧛  \n" + term.move_xy(round(10),round(term.height/2))+str(len(Players[1]["ghostsLocationList"]))+"  -  " +str(len(Players[2]["ghostsLocationList"]))+term.normal+term.move_xy(50,50),end ='',flush=True)
    else :
       print(term.move_xy(round(term.width/3),round(term.height/3)),"𝕋H𝔼 𝕎𝕀NN𝔼R 𝕀𝕊 : P𝕃𝔸𝕐𝔼R 𝕆N𝔼  🧝   \n" +term.move_xy(round(10),round(term.height/2))+ str(len(Players[2]["ghostsLocationList"]))+"  -  " +str(len(Players[1]["ghostsLocationList"]))+term.normal+term.move_xy(50,50),end ='',flush=True)
-
-
-
 
 def displayScore(Players,MapXY):#LINA
    print(term.home+term.clear)
@@ -528,5 +520,4 @@ def playgame(map_path, group_1, type_1, group_2, type_2):
 
 
 playgame("Map.txt","groupe1","AI","groupe2","AI")
-
 
